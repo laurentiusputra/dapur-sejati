@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer\CatalogController;
 use App\Http\Controllers\Customer\OrderController;
 use App\Http\Controllers\Customer\ReviewController;
+use App\Http\Controllers\Auth\LoginController;
 
 
 /*
@@ -22,6 +23,22 @@ Route::get('/menu', [CatalogController::class, 'index'])->name('menu');
 Route::post('/checkout', [OrderController::class, 'store'])
     ->middleware('throttle:3,1')
     ->name('checkout');
+
+// Jalur Akses Login Internal (Owner, Admin, Merchant)
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+// Sisa Aliran Routing Navbar Pendukung
+Route::get('/cart', function () { return redirect()->route('home'); })->name('cart');
+Route::get('/contact', function () { return redirect()->route('home'); })->name('contact');
+
+// Menampilkan Halaman Review
+Route::get('/review', [ReviewController::class, 'index'])->name('review');
+
+// Memproses Form Review yang Dikirim (Ini rute yang tadi error)
+Route::post('/review', [ReviewController::class, 'store'])->name('review.store');
+
 
 // Halaman About Us Bertumpuk
 Route::get('/about', function () {

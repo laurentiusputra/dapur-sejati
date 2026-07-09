@@ -94,8 +94,79 @@
         </div>
     </section>
 
-
     @include('customer.menu')
+    
+    <!-- =========================================================================
+         📌 SECTION REVIEW DI HALAMAN HOME (PREVIEW)
+         ========================================================================= -->
+    <section class="bg-[#f4ebd0] pt-8 pb-20 text-slate-800 relative overflow-hidden">
+        
+        <!-- Garis Pemisah Konsisten dengan Menu -->
+        <div class="max-w-5xl mx-auto border-t border-brand-emerald-950/15 relative z-10 mb-20"></div>
+
+        <div class="max-w-5xl mx-auto px-6 relative z-10 space-y-12">
+            
+            <div class="text-center">
+                <div class="inline-flex items-center gap-2 bg-brand-emerald-950/10 text-brand-emerald-950 text-[11px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest mb-3">
+                    💬 Customer Testimonials
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-heading font-black text-brand-emerald-950 tracking-tight">Apa Kata Mereka?</h2>
+            </div>
+
+            <!-- Preview 3 Review Teratas -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-1 text-[#dfc365] mb-3 text-sm">⭐⭐⭐⭐⭐</div>
+                        <p class="text-slate-600 text-xs leading-relaxed italic">"Risol ayam spicy-nya bener-bener juara mas! Isian ayam suwirnya melimpah banget dan pedasnya pas di lidah."</p>
+                    </div>
+                    <div class="flex items-center gap-3 mt-6 pt-4 border-t border-slate-50">
+                        <div class="w-9 h-9 rounded-full bg-[#dfc365]/30 flex items-center justify-center font-bold text-brand-emerald-950 text-xs">LN</div>
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-950 tracking-tight">Laurentius N.</h4>
+                            <p class="text-[10px] text-slate-400">Pelanggan Setia Daily</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-1 text-[#dfc365] mb-3 text-sm">⭐⭐⭐⭐⭐</div>
+                        <p class="text-slate-600 text-xs leading-relaxed italic">"Dua jempol buat Dimsum Mentai-nya! Sausnya creamy gurih tebel banget, daging aslinya berasa banget."</p>
+                    </div>
+                    <div class="flex items-center gap-3 mt-6 pt-4 border-t border-slate-50">
+                        <div class="w-9 h-9 rounded-full bg-[#dfc365]/30 flex items-center justify-center font-bold text-brand-emerald-950 text-xs">VS</div>
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-950 tracking-tight">Vincent S.</h4>
+                            <p class="text-[10px] text-slate-400">Penikmat Weekend PO</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex flex-col justify-between hidden md:flex">
+                    <div>
+                        <div class="flex items-center gap-1 text-[#dfc365] mb-3 text-sm">⭐⭐⭐⭐⭐</div>
+                        <p class="text-slate-600 text-xs leading-relaxed italic">"Request menu katering partai besar, pelayanannya ramah banget, pengiriman tepat waktu, dan makanannya masih hangat."</p>
+                    </div>
+                    <div class="flex items-center gap-3 mt-6 pt-4 border-t border-slate-50">
+                        <div class="w-9 h-9 rounded-full bg-[#dfc365]/30 flex items-center justify-center font-bold text-brand-emerald-950 text-xs">ST</div>
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-950 tracking-tight">Stefani T.</h4>
+                            <p class="text-[10px] text-slate-400">Acara Custom Order</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tombol Redirect ke Halaman Review Penuh -->
+            <div class="text-center mt-8">
+                <a href="{{ route('review') }}" class="inline-flex items-center justify-center bg-[#dfc365] hover:bg-brand-emerald-950 text-brand-emerald-950 hover:text-white font-black py-3.5 px-10 rounded-full shadow-lg shadow-[#dfc365]/20 hover:scale-105 transition-all duration-200 text-xs tracking-widest uppercase cursor-pointer">
+                    Lihat Semua Ulasan & Tulis Review ✍️
+                </a>
+            </div>
+
+        </div>
+    </section>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
