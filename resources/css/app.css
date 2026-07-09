@@ -1,0 +1,212 @@
+@import 'tailwindcss';
+
+/* Ambil Font Estetik Modern dari Google Fonts API */
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap');
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    /* Font Bindings */
+    --font-heading: 'DM Serif Display', serif;
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+
+    /* Susunan Warna Dibalik: Dominan Hijau Mint Paling Bawah Foto Terlebih Dahulu */
+    --color-brand-mint-bg: #7FA66A;  /* Hijau Daun Mint (Background Utama) */
+    --color-brand-orange: #F59A30;   /* Oranye Markisa Matang */
+    --color-brand-light: #FCE19D;    /* Kuning Markisa Muda */
+    --color-brand-cream: #F9F2DC;    /* Warna Krim Keju Lembut */
+    --color-brand-plate: #E3EBF2;    /* Abu-abu Piring Lembut */
+    --color-brand-emerald-bg: #115042;  /* Hijau Emerald Cerah */
+    --color-brand-cafe-brown: #622B14;    /* Coklat Kafe */
+    --color-brand-brown-wood: #995F2F;    /* Coklat Kayu */
+    --color-brand-sage: #978F66;    /* Hijau Sage Lembut */
+    --color-brand-belge: #E4D6A9;    /* Beige Hangat */
+
+    /* 🍦 PALET 1: SWEET SORBET & FRUITY CORNER (Dari Screenshot Menu Buah & Es Krim) */
+    --color-brand-mango-pulp: #F98125;   /* Oranye Daging Mangga Matang */
+    --color-brand-orange-peel: #FA9F1E;  /* Oranye Kulit Jeruk Segar */
+    --color-brand-citrus-glow: #FDBA13;  /* Kuning Sitrus Cerah */
+    --color-brand-banana-shake: #FED430; /* Kuning Pisang Lembut */
+    --color-brand-creamy-puff: #FCEAA6;  /* Kuning Krim Kue Sus */
+    --color-brand-custard: #FFF4C5;      /* Kuning Custard Lembut */
+    --color-brand-warm-ivory: #FFF9E1;   /* Putih Gading / Cream Hangat */
+
+    /* 🍵 PALET 2: MATCHA & GREENS CORNER (Dari Screenshot Skema Hijau Daun & Teh) */
+    --color-brand-deep-forest: #14361C;  /* Hijau Hutan Pekat (Sangat cocok buat teks/bg utama) */
+    --color-brand-dark-matcha: #2E532B;  /* Hijau Matcha Bubuk Tua */
+    --color-brand-matcha-latte: #4D7644; /* Hijau Matcha Latte Standar */
+    --color-brand-leaf-green: #6C9A5D;   /* Hijau Daun Segar */
+    --color-brand-mint-cream: #98BE88;   /* Hijau Mint Berkabut */
+    --color-brand-soft-sage: #C3DEB5;    /* Hijau Sage Sangat Muda */
+    --color-brand-matcha-ice: #E8F5E1;   /* Putih Hijau Es Matcha */
+
+    /* 🪻 PALET 3: TARO & SWEET POTATO CORNER (Dari Screenshot Skema Ungu Taro) */
+    --color-brand-purple-yam: #402347;   /* Ungu Ubi Jalar Pekat */
+    --color-brand-deep-taro: #5A3961;    /* Ungu Taro Gelap murni */
+    --color-brand-taro-paste: #795580;   /* Ungu Selai Taro */
+    --color-brand-taro-latte: #9F7EA6;   /* Ungu Susu Taro */
+    --color-brand-taro-powder: #C6A8CD;  /* Ungu Taro Bubuk Soft */
+    --color-brand-soft-orchid: #EAD0EF;  /* Ungu Anggrek Muda */
+    --color-brand-taro-ice: #F8EDFA;     /* Putih Ungu Es Taro */
+
+    /* 🥥 PALET 4: COCONUT & REFRESHING BLUE CORNER (Dari Screenshot Skema Biru Kelapa Muda) */
+    --color-brand-deep-ocean: #163645;   /* Biru Samudra Pekat */
+    --color-brand-dark-cyan: #2A5464;    /* Biru Cyan Gelap */
+    --color-brand-ocean-breeze: #477789; /* Biru Angin Laut */
+    --color-brand-clear-sky: #6B9CAE;    /* Biru Langit Cerah */
+    --color-brand-coconut-water: #97C2D3;/* Biru Air Kelapa Segar */
+    --color-brand-ice-blue: #C5E6F3;     /* Biru Es Kristal */
+    --color-brand-coconut-milk: #EAFAF1; /* Putih Susu Kelapa Bersih */
+
+    /* 🧁 PALET 5: NESS CORNER (Dari Screenshot Skema Pastel Lembut) */
+    --color-brand-ness-pink: #F8C6D0;    /* Merah Muda Ness */
+    --color-brand-ness-peach: #FCD8C5;   /* Kuning Muda Ness */
+    --color-brand-ness-lavender: #E6D4F0; /* Ungu Muda Ness */
+    --color-brand-ness-mint: #D0E8E2;    /* Hijau Muda Ness */
+    --color-brand-ness-cream: #F9F2DC;   /* Krim Muda Ness */
+    --color-brand-ness-ivory: #FFF9E1;   /* Putih Muda Ness */
+    --color-brand-ness-white: #FFFFFF;   /* Putih Ness */
+    
+    /* =========================================================================
+       ✨ SEKTOR PERUBAHAN TOTAL: PALET WARNA BARU SESUAI SCREENSHOT EKSKLUSIF
+       ========================================================================= */
+
+    /* 🍯 PALET 1: GOLDEN HONEY & MUSTARD (Screenshot 14-23-49) */
+    --color-brand-honey-50: #F7EFDD;
+    --color-brand-honey-100: #F0E1BE;
+    --color-brand-honey-200: #E9D4A0;
+    --color-brand-honey-300: #E3C980;
+    --color-brand-honey-400: #DDBE61;
+    --color-brand-honey-500: #D4AF44;
+    --color-brand-honey-600: #C29C30;
+    --color-brand-honey-700: #A1822A;
+    --color-brand-honey-800: #826824;
+    --color-brand-honey-900: #624F1D;
+    --color-brand-honey-950: #443715;
+
+    /* ☕ PALET 2: CREAMY CARAMEL & LATTE (Screenshot 14-25-02) */
+    --color-brand-caramel-50: #F4EADA;
+    --color-brand-caramel-100: #EEE0CA;
+    --color-brand-caramel-200: #E8D6BB;
+    --color-brand-caramel-300: #E1CBAC;
+    --color-brand-caramel-400: #D7BB95;
+    --color-brand-caramel-500: #CDAC7F;
+    --color-brand-caramel-600: #C29C69;
+    --color-brand-caramel-700: #B68B54;
+    --color-brand-caramel-800: #A27A47;
+    --color-brand-caramel-900: #8A683F;
+    --color-brand-caramel-950: #725736;
+
+    /* 🍌 PALET 3: BANANA CREAM & CUSTARD (Screenshot 14-25-30) */
+    --color-brand-custard-50: #F9F2E5;
+    --color-brand-custard-100: #F4E8CE;
+    --color-brand-custard-200: #F0DEB7;
+    --color-brand-custard-300: #ECD59F;
+    --color-brand-custard-400: #E8CC87;
+    --color-brand-custard-500: #E0BD69;
+    --color-brand-custard-600: #D8AE4B;
+    --color-brand-custard-700: #CD9D30;
+    --color-brand-custard-800: #AC842B;
+    --color-brand-custard-900: #8C6B25;
+    --color-brand-custard-950: #6C531E;
+
+    /* 🍊 PALET 4: FRESH ORANGE & MANGO (Screenshot 14-25-55) */
+    --color-brand-orange-50: #FFEDE0;
+    --color-brand-orange-100: #FDDEC8;
+    --color-brand-orange-200: #FBD0B0;
+    --color-brand-orange-300: #F9C298;
+    --color-brand-orange-400: #F5B582;
+    --color-brand-orange-500: #F19F60;
+    --color-brand-orange-600: #EB8A3F;
+    --color-brand-orange-700: #E6731F;
+    --color-brand-orange-800: #C66119;
+    --color-brand-orange-900: #A25016;
+    --color-brand-orange-950: #7F3F13;
+
+    /* 🍵 PALET 5: MATCHA & LEAF GREEN (Screenshot 14-26-19) */
+    --color-brand-matcha-50: #EEF6DF;
+    --color-brand-matcha-100: #DEEDC4;
+    --color-brand-matcha-200: #CDE2AB;
+    --color-brand-matcha-300: #BBD693;
+    --color-brand-matcha-400: #A8C87D;
+    --color-brand-matcha-500: #96BB64;
+    --color-brand-matcha-600: #84AA4F;
+    --color-brand-matcha-700: #708E45;
+    --color-brand-matcha-800: #5C733A;
+    --color-brand-matcha-900: #47582E;
+    --color-brand-matcha-950: #333E22;
+
+    /* 🪵 PALET 6: BROWN WOOD & SPICES (Screenshot 14-27-44) */
+    --color-brand-wood-50: #FEFDFB;
+    --color-brand-wood-100: #F6EDDB;
+    --color-brand-wood-200: #EEDCBA;
+    --color-brand-wood-300: #E5CB9A;
+    --color-brand-wood-400: #DDB979;
+    --color-brand-wood-500: #D5A759;
+    --color-brand-wood-600: #C99237;
+    --color-brand-wood-700: #A3772F;
+    --color-brand-wood-800: #7E5C27;
+    --color-brand-wood-900: #59421E;
+    --color-brand-wood-950: #362813;
+
+    /* 🍂 PALET 7: AUTUMN COPPER & TERRACOTTA (Screenshot 14-29-04) */
+    --color-brand-copper-50: #FAD2C2;
+    --color-brand-copper-100: #F5B499;
+    --color-brand-copper-200: #F09770;
+    --color-brand-copper-300: #EA7A48;
+    --color-brand-copper-400: #E35F21;
+    --color-brand-copper-500: #BC4F1A;
+    --color-brand-copper-600: #954118;
+    --color-brand-copper-700: #6E3214;
+    --color-brand-copper-800: #4A220F;
+    --color-brand-copper-900: #261209;
+    --color-brand-copper-950: #040201;
+
+    /* 🟡 PALET 8: TURMERIC & DEEP OCHRE (Screenshot 14-31-44) */
+    --color-brand-ochre-50: #FEFDFB;
+    --color-brand-ochre-100: #F7EEDC;
+    --color-brand-ochre-200: #F0DFBD;
+    --color-brand-ochre-300: #E9D19D;
+    --color-brand-ochre-400: #E3C37D;
+    --color-brand-ochre-500: #DDB55C;
+    --color-brand-ochre-600: #D2A239;
+    --color-brand-ochre-700: #B2862B;
+    --color-brand-ochre-800: #8C6924;
+    --color-brand-ochre-900: #664D1C;
+    --color-brand-ochre-950: #413113;
+
+    /* 🪻 PALET 9: SWEET TARO & BERRY CORNER (Screenshot 6e371f) */
+    --color-brand-berry-50: #E494D4;
+    --color-brand-berry-100: #DB77C6;
+    --color-brand-berry-200: #D15AB8;
+    --color-brand-berry-300: #C63FA9;
+    --color-brand-berry-400: #AA3590;
+    --color-brand-berry-500: #8B2D76;
+    --color-brand-berry-600: #6D255C;
+    --color-brand-berry-700: #562046;
+    --color-brand-berry-800: #401A33;
+    --color-brand-berry-900: #2B1322;
+    --color-brand-berry-950: #170B12;
+
+    /* 🍓 PALET 10: RED VELVET & STRAWBERRY SOUFFLE (Screenshot 6e335f) */
+    --color-brand-velvet-50: #F9E2E7;
+    --color-brand-velvet-100: #F4CAD3;
+    --color-brand-velvet-200: #F0B3BD;
+    --color-brand-velvet-300: #EB9BA7;
+    --color-brand-velvet-400: #E68390;
+    --color-brand-velvet-500: #DE6576;
+    --color-brand-velvet-600: #D5485C;
+    --color-brand-velvet-700: #C63147;
+    --color-brand-velvet-800: #A52B3E;
+    --color-brand-velvet-900: #852534;
+    --color-brand-velvet-950: #661E2A;
+
+    /* Warna tambahan untuk elemen UI */
+    --color-brand-pantone-white: #F0EEE9; /* Putih Pantone (Netral untuk latar belakang dan elemen bersih) */
+    --color-brand-pantone-ruined-smores: #101113; /* Hitam Pekat Pantone (Untuk teks utama dan elemen gelap) */
+    --color-brand-pantone-black-iris: #2B3042; /* Hitam Ungu Pantone (Untuk teks dan aksen gelap) */
+    --color-brand-pantone-gold-flake: #BC9312; /* Emas Kuning Pantone (Untuk aksen mewah dan highlight) */
+    --color-brand-pantone-gold-cream: #dfc365; /* Emas Krim Pantone (Untuk aksen mewah dan highlight yang lebih lembut) */
+    --color-brand-pantone-dark-gold : #dca900; /* Emas Gelap Pantone (Untuk aksen mewah dan highlight yang lebih kuat) */
+}
