@@ -11,15 +11,14 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('price')->nullable();
-            $table->text('narration');
-            $table->string('image');
-            $table->enum('category', ['daily', 'special', 'po']);
-            $table->integer('quota')->default(0); // 🛠️ TAMBAHKAN BARIS INI BIAR CONTROLLER GAK ERROR
-            $table->boolean('is_available')->default(true);
+            $table->text('description')->nullable(); // Pastikan baris ini ada
+            $table->decimal('price', 12, 2)->default(0);
+            $table->integer('stock')->default(0);
+            $table->string('image_path')->nullable();
             $table->timestamps();
         });
     }
+
 
     public function down(): void
     {

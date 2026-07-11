@@ -44,7 +44,7 @@
     </main>
 
     <footer class="bg-brand-emerald-bg text-white/85 border-t border-emerald-900/40 py-12">
-        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
             <div class="md:col-span-4 flex items-center gap-4">
                 <img src="{{ asset('img/logo/logo-dapur-sejati-white.webp') }}" alt="Logo Footer" class="w-35 h-35 object-contain ">
                 <div>
@@ -52,24 +52,37 @@
                     <p class="text-[11px] text-emerald-100/80 uppercase tracking-widest mt-0.5">Premium Pre-Order</p>
                 </div>
             </div>
-            <div class="md:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-6 text-sm">
-                <div class="space-y-2">
+            
+            <!-- Menggunakan Flexbox agar jarak antar kolom lebih presisi dan simetris secara visual -->
+            <div class="md:col-span-8 flex flex-col sm:flex-row flex-wrap justify-between gap-8 text-sm">
+                
+                <div class="space-y-3 min-w-max">
                     <h4 class="text-xs font-bold uppercase tracking-wider text-brand-light">WhatsApp Business</h4>
-                    <p class="text-emerald-100/80 hover:text-white transition-colors"><a href="https://wa.me/628174163999" target="_blank">0817-4163-999</a></p>
+                    <p><a href="https://wa.me/628174163999" target="_blank" class="text-emerald-100/80 hover:text-white transition-colors">0817-4163-999</a></p>
                 </div>
-                <div class="space-y-2">
+                
+                <div class="space-y-3 min-w-max">
                     <h4 class="text-xs font-bold uppercase tracking-wider text-brand-light">Social Media</h4>
-                    <p class="text-emerald-100/80 leading-relaxed "> 
-                        <a href="https://www.instagram.com/tasteofsejati/" target="_blank" class="hover:text-white transition-colors">Instagram</a> <br>
+                    <!-- Tag <br> yang bocor sudah dibersihkan -->
                     <ul class="space-y-1 text-emerald-100/80">
-                        <li><a href="#" class="hover:text-white transition-colors"></a></li>
-                        <li><a href="#" class="hover:text-white transition-colors"></a></li>
+                        <li><a href="https://www.instagram.com/tasteofsejati/" target="_blank" class="hover:text-white transition-colors">@tasteofsejati</a></li>
                     </ul>
                 </div>
-                <div class="space-y-2">
+                
+                <!-- Lebar dibatasi agar teks Alamat bisa nge-wrap rapi ke bawah -->
+                <div class="space-y-3 max-w-[240px]">
                     <h4 class="text-xs font-bold uppercase tracking-wider text-brand-light">Alamat Dapur</h4>
-                    <p class="text-emerald-100/80 leading-relaxed">Jl. Peleburan Tengah No. 12, <br>Semarang Selatan, Kota Semarang</p>
+                    <p class="text-emerald-100/80 leading-relaxed">Jl. Peleburan Tengah No. 12,<br>Semarang Selatan, Kota Semarang</p>
                 </div>
+                
+                <div class="space-y-3 min-w-max">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-brand-light">Privacy Policy and Terms of Service</h4>
+                    <ul class="space-y-1 text-emerald-100/80">
+                        <li><a href="{{ route('privacy') }}" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="{{ route('terms') }}" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+
             </div>
         </div>
         <div class="max-w-6xl mx-auto px-6 mt-10 pt-6 border-t border-brand-cream/25 text-center text-[11px] text-emerald-200/40 tracking-wider">
@@ -110,8 +123,8 @@
 
                     navLinks.forEach(link => {
                         link.style.setProperty('color', '', '');
-                        link.classList.remove('hover:!text-emerald-200');
-                        link.classList.add('hover:!text-emerald-600');
+                        link.classList.remove('hover:!text-emerald-700');
+                        link.classList.add('hover:!text-emerald-900');
                     });
                 }
             }
@@ -145,29 +158,8 @@
 
                         // Jika nabrak gambar makanan/SVG, wajib pakai teks terang (Dark Theme Navbar)
                         if (el.tagName === 'IMG' || el.tagName === 'SVG') {
-                            pointIsLight = true; // Asumsi gambar itu gelap, jadi navbar harus terang
+                            pointIsLight = false;
                             break;
-                        
-                        // Jika nabrak warna widget solid (misal div, section, atau background), cek kecerahan warnanya
-                        } else if (el.tagName === 'DIV' || el.tagName === 'SECTION' || el.tagName === 'MAIN' || el.tagName === 'ARTICLE') {
-                            const bg = window.getComputedStyle(el).backgroundColor;
-                            const rgba = bg.match(/\d+(\.\d+)?/g);
-                            
-                            if (rgba && rgba.length >= 3) {
-                                const alpha = rgba.length === 4 ? parseFloat(rgba[3]) : 1;
-                                
-                                // Jika elemen punya warna solid (bukan transparan)
-                                if (alpha > 0.1) {
-                                    const r = parseInt(rgba[0]);
-                                    const g = parseInt(rgba[1]);
-                                    const b = parseInt(rgba[2]);
-                                    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-                                    
-                                    // Cek apakah warnanya cerah
-                                    pointIsLight = brightness > 200;
-                                    break; // Stop ngecek ke bawah lagi karena udah nemu layar solid teratas!
-                                }
-                            }
                         }
 
                         // Deteksi warna asli dengan cepat tanpa loop DOM parent
@@ -185,7 +177,7 @@
                                 const brightness = (r * 299 + g * 587 + b * 114) / 1000;
                                 
                                 // Cek apakah warnanya cerah
-                                pointIsLight = brightness > 200;
+                                pointIsLight = brightness > 150;
                                 break; // Stop ngecek ke bawah lagi karena udah nemu layar solid teratas!
                             }
                         }

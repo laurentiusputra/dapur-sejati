@@ -6,6 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    // Mengizinkan semua kolom diisi saat input data (Seeder/Form)
-    protected $guarded = [];
+    // Daftarkan semua kolom Supabase + kolom pelengkap agar bisa di-seed
+    protected $fillable = [
+        'name', 
+        'description', 
+        'image_path', 
+        'price', 
+        'stock', 
+        'category', 
+        'quota'
+    ]; 
 }

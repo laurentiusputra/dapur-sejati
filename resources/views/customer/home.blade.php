@@ -98,12 +98,9 @@
     
     <!-- =========================================================================
          📌 SECTION REVIEW DI HALAMAN HOME (PREVIEW)
+         (Menggunakan Background #F0EEE9 yang lebih putih bersih)
          ========================================================================= -->
-    <section class="bg-[#f4ebd0] pt-8 pb-20 text-slate-800 relative overflow-hidden">
-        
-        <!-- Garis Pemisah Konsisten dengan Menu -->
-        <div class="max-w-5xl mx-auto border-t border-brand-emerald-950/15 relative z-10 mb-20"></div>
-
+    <section class="bg-[#F0EEE9] pt-24 pb-24 text-slate-800 relative overflow-hidden">
         <div class="max-w-5xl mx-auto px-6 relative z-10 space-y-12">
             
             <div class="text-center">
