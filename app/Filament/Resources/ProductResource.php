@@ -54,8 +54,8 @@ class ProductResource extends Resource
 
                 FileUpload::make('image_path')
                     ->label('Foto Produk')
-                    ->image()
-                    ->directory('products-gallery') // Nama folder di Bucket Supabase Anda
+                    ->disk('public') // DITAMBAHKAN: Agar foto tersimpan di folder lokal (storage/app/public)
+                    ->directory('products-gallery') // Nanti otomatis masuk ke folder: storage/app/public/products-gallery
                     ->visibility('public')
                     ->required(),
             ]);
@@ -67,7 +67,7 @@ class ProductResource extends Resource
             ->columns([
                 ImageColumn::make('image_path')
                     ->label('Gambar')
-                    ->disk('s3'), // Membaca file gambar dari adapter S3 Supabase
+                    ->disk('public'), // DIUBAH DARI 's3' KE 'public': Agar preview gambar di tabel admin bisa muncul dari folder lokal
 
                 TextColumn::make('name')
                     ->label('Nama Produk')

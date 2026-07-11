@@ -16,9 +16,14 @@ use App\Http\Controllers\Auth\LoginController;
 // Menampilkan halaman Beranda Utama (customer/home.blade.php) lewat Controller
 Route::get('/', [CatalogController::class, 'index'])->name('home');
 
-// Menampilkan halaman Menu Standalone (customer/menu.blade.php)
+// Menampilkan halaman Katalog Menu Lengkap
+// (Tetap menggunakan rute /menu agar link di navbar tidak perlu diubah)
 Route::get('/menu', function () {
-    return view('customer.menu'); 
+    // Mengambil semua data produk langsung menggunakan Model Product
+    $products = \App\Models\Product::all(); 
+    
+    // Mengarahkan ke file view yang baru kita buat beserta datanya
+    return view('customer.catalog.index', compact('products')); 
 })->name('menu');
 
 

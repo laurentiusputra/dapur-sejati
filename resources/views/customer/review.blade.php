@@ -3,12 +3,8 @@
 @section('title', 'Ulasan Pelanggan')
 
 @section('content')
-<!-- =========================================================================
-     📌 SECTION UTAMA HALAMAN REVIEW
-     ========================================================================= -->
-<section class="bg-[#f4ebd0] py-24 text-slate-800 relative overflow-hidden min-h-screen">
+<section class="bg-[#f4ebd0] pt-48 pb-24 text-slate-800 relative overflow-hidden min-h-screen">
     
-    <!-- Dekoras Canvas -->
     <div class="hidden xl:block absolute inset-0 pointer-events-none select-none z-0">
         <div class="absolute top-[8%] left-[5%] text-brand-emerald-950/[0.05] scale-110 rotate-12">
             <svg class="w-16 h-16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2s-1 .5-2 2.5C9 3 7.5 3 6.5 4.5 5.5 5.5 5 7 5.5 9c-1 1-1.5 2.5-1.5 4 0 4 3.5 7 8 7s8-3 8-7c0-1.5-.5-3-1.5-4 .5-2 0-3.5-1-4.5C16.5 3 15 3 14 4.5 13 2.5 12 2zM9.5 8c.5-1 1.5-2 2.5-2s2 1 2.5 2v4h-5V8z"/></svg>
@@ -24,10 +20,8 @@
         </div>
     </div>
 
-    <!-- Container Utama -->
     <div class="max-w-5xl mx-auto px-6 relative z-10 space-y-16">
         
-        <!-- Header Judul -->
         <div class="text-center">
             <div class="inline-flex items-center gap-2 bg-brand-emerald-950/10 text-brand-emerald-950 text-[11px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest mb-3">
                 💬 Customer Testimonials
@@ -36,12 +30,6 @@
             <p class="text-emerald-950/70 mt-2 text-sm sm:text-base max-w-md mx-auto">Ulasan jujur dari para penikmat hidangan premium Pre-Order Dapur Sejati.</p>
         </div>
 
-        <!-- =========================================================================
-             💡 NOTE BACKEND: 
-             Ubah Card Statis di bawah ini dengan @ foreach($reviews as $review) 
-             untuk mengambil data dari PostgreSQL nanti.
-             ========================================================================= -->
-        <!-- Grid Card Review -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex flex-col justify-between relative z-10">
                 <div>
@@ -86,22 +74,17 @@
             </div>
         </div>
 
-        <!-- Form Kirim Kritik/Saran (Telah Ditambahkan Kategori Pesanan) -->
         <div class="max-w-xl mx-auto bg-white rounded-3xl p-6 shadow-sm border border-slate-100 relative z-10">
             <h3 class="text-sm font-bold text-slate-950 tracking-tight mb-1 text-center">Punya Masukan Bagus?</h3>
             <p class="text-[11px] text-slate-400 text-center mb-4">Kritik dan saran lo bener-bener berharga banget buat ningkatikin kualitas masakan dapur kami.</p>
             
-            <!-- Pastikan Action Mengarah Ke Route POST Controller Kamu Nanti -->
-            <!-- Contoh: action="{{ route('review.store') }}" -->
             <form action="#" method="POST" class="space-y-4">
-                @csrf <!-- Wajib ada di Laravel untuk form keamanan POST -->
+                @csrf 
                 
-                <!-- Input Nama -->
                 <div>
                     <input type="text" name="name" placeholder="Nama Lengkap Anda" class="w-full text-xs px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:outline-none focus:border-[#dfc365] transition-colors" required>
                 </div>
 
-                <!-- Input Pilihan Kategori Menu (Baru!) -->
                 <div>
                     <select name="category" class="w-full text-xs px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:outline-none focus:border-[#dfc365] transition-colors appearance-none cursor-pointer" required>
                         <option value="" disabled selected class="text-slate-400">Pilih Kategori Pesanan yang Diulas...</option>
@@ -111,13 +94,10 @@
                     </select>
                 </div>
 
-                <!-- Input Rating Bintang Interaktif -->
                 <div class="flex flex-col items-center justify-center gap-1 mt-2">
                     <span class="text-[11px] font-bold text-slate-500 uppercase tracking-widest">Beri Rating</span>
                     <div class="flex items-center gap-1 cursor-pointer" id="star-rating-container">
-                        <!-- Input hidden untuk dikirim ke backend database -->
                         <input type="hidden" name="rating" id="rating-value" value="5">
-                        
                         <button type="button" class="star-btn text-[#dfc365] text-2xl focus:outline-none transition-transform hover:scale-110" data-value="1">★</button>
                         <button type="button" class="star-btn text-[#dfc365] text-2xl focus:outline-none transition-transform hover:scale-110" data-value="2">★</button>
                         <button type="button" class="star-btn text-[#dfc365] text-2xl focus:outline-none transition-transform hover:scale-110" data-value="3">★</button>
@@ -126,12 +106,10 @@
                     </div>
                 </div>
 
-                <!-- Input Komentar -->
                 <div>
                     <textarea name="comment" rows="3" placeholder="Tulis ulasan masakan Anda disini..." class="w-full text-xs px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:outline-none focus:border-[#dfc365] transition-colors resize-none" required></textarea>
                 </div>
 
-                <!-- Tombol Submit -->
                 <button type="submit" class="w-full bg-[#dfc365] hover:bg-brand-emerald-950 text-brand-emerald-950 hover:text-white font-black py-3.5 rounded-full text-xs tracking-widest uppercase transition-all duration-300 shadow-md cursor-pointer">
                     Kirim Ulasan 🚀
                 </button>
@@ -141,7 +119,6 @@
     </div>
 </section>
 
-<!-- Script Khusus untuk Animasi Bintang -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const stars = document.querySelectorAll('.star-btn');
