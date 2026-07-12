@@ -82,7 +82,12 @@
                 @csrf 
                 
                 <div>
-                    <input type="text" name="name" placeholder="Nama Lengkap Anda" class="w-full text-xs px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:outline-none focus:border-[#dfc365] transition-colors" required>
+                    <!-- 🛠️ UPDATE: Kondisi deteksi akun terikat (Google/Email) vs input manual pembeli umum -->
+                    @auth
+                        <input type="text" name="name" value="{{ auth()->user()->name }}" class="w-full text-xs px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-100 text-slate-500 focus:outline-none cursor-not-allowed" readonly required>
+                    @else
+                        <input type="text" name="name" placeholder="Nama Lengkap Anda" class="w-full text-xs px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:outline-none focus:border-[#dfc365] transition-colors" required>
+                    @endauth
                 </div>
 
                 <div>

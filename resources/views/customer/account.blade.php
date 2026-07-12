@@ -224,11 +224,48 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-50 font-bold text-slate-700">
+                                <!-- 🛠️ DITAMBAHKAN: Blok PHP Deteksi Perangkat Secara Real-time & Otomatis -->
+                                @php
+                                    $userAgent = request()->header('User-Agent');
+                                    
+                                    // Deteksi Sistem Operasi (OS)
+                                    $os = 'Perangkat Tidak Dikenal';
+                                    if (preg_match('/windows|win32/i', $userAgent)) {
+                                        $os = 'Windows';
+                                    } elseif (preg_match('/ubuntu/i', $userAgent)) {
+                                        $os = 'Ubuntu Linux';
+                                    } elseif (preg_match('/android/i', $userAgent)) {
+                                        $os = 'Android';
+                                    } elseif (preg_match('/iphone|ipad|ipod/i', $userAgent)) {
+                                        $os = 'iOS';
+                                    } elseif (preg_match('/linux/i', $userAgent)) {
+                                        $os = 'Linux';
+                                    } elseif (preg_match('/macintosh|mac os x/i', $userAgent)) {
+                                        $os = 'Mac OS';
+                                    }
+
+                                    // Deteksi Aplikasi Browser
+                                    $browser = 'Browser';
+                                    if (preg_match('/edge|edg/i', $userAgent)) {
+                                        $browser = 'Edge';
+                                    } elseif (preg_match('/chrome|crios/i', $userAgent) && !preg_match('/opr/i', $userAgent)) {
+                                        $browser = 'Chrome';
+                                    } elseif (preg_match('/firefox|fxios/i', $userAgent)) {
+                                        $browser = 'Firefox';
+                                    } elseif (preg_match('/safari/i', $userAgent)) {
+                                        $browser = 'Safari';
+                                    } elseif (preg_match('/opera|opr/i', $userAgent)) {
+                                        $browser = 'Opera';
+                                    }
+                                @endphp
                                 <tr>
                                     <td class="p-4 flex items-center gap-3">
-                                        <div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center text-md">💻</div>
+                                        <!-- Dinamis mengubah icon sesuai deteksi HP / Komputer -->
+                                        <div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center text-md">
+                                            @if(Str::contains(Str::lower($os), ['android', 'ios'])) 📱 @else 💻 @endif
+                                        </div>
                                         <div>
-                                            <p class="font-bold text-slate-900">Chrome di Ubuntu Linux</p>
+                                            <p class="font-bold text-slate-900">{{ $browser }} di {{ $os }}</p>
                                             <p class="text-[10px] text-slate-400 font-medium">Sesi Browser Saat Ini</p>
                                         </div>
                                     </td>

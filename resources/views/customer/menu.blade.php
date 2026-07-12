@@ -66,13 +66,6 @@
                 <p class="text-emerald-950/70 mt-2 text-sm sm:text-base max-w-md mx-auto">Menu rumahan segar siap saji yang ready untuk dimasak hangat setiap hari.</p>
             </div>
 
-            <!-- Notifikasi Order Sesi -->
-            @if(session('success'))
-                <div class="max-w-md mx-auto mb-6 bg-emerald-100 border border-emerald-400 text-emerald-800 px-4 py-3 rounded-2xl text-center text-sm font-bold shadow-sm">
-                    {{ session('success') }}
-                </div>
-            @endif
-
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
                 @php 
                     // Mengunci urutan array data menggunakan sortBy('id') agar persis isi seeder & dokumen Word

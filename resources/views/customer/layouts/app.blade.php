@@ -368,5 +368,51 @@
         });
     </script>
 
+    <!-- 🛠️ UPDATE WIDGET GLOBAL: Smooth Toast Notification Alert Slide-in -->
+    @if(session('success'))
+        <div id="custom-toast-alert" 
+             class="fixed top-28 right-6 z-50 transform translate-x-full opacity-0 transition-all duration-500 ease-out max-w-sm bg-emerald-50 border border-emerald-400 text-emerald-950 px-5 py-3.5 rounded-2xl shadow-xl flex items-center gap-3 backdrop-blur-md bg-opacity-95">
+            
+            <div class="flex items-center justify-center w-7 h-7 rounded-full bg-emerald-500 text-white shrink-0 text-sm shadow-sm animate-bounce">
+                ✨
+            </div>
+            
+            <div class="text-xs font-black tracking-wide leading-relaxed pr-2">
+                {{ session('success') }}
+            </div>
+            
+            <button type="button" onclick="dismissToastAlert()" class="ml-auto text-slate-400 hover:text-rose-600 text-base font-bold transition-colors focus:outline-none cursor-pointer">
+                &times;
+            </button>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const toastElement = document.getElementById('custom-toast-alert');
+                if (toastElement) {
+                    setTimeout(() => {
+                        toastElement.classList.remove('translate-x-full', 'opacity-0');
+                        toastElement.classList.add('translate-x-0', 'opacity-100');
+                    }, 150);
+
+                    setTimeout(() => {
+                        dismissToastAlert();
+                    }, 4000);
+                }
+            });
+
+            function dismissToastAlert() {
+                const toastElement = document.getElementById('custom-toast-alert');
+                if (toastElement) {
+                    toastElement.classList.remove('translate-x-0', 'opacity-100');
+                    toastElement.classList.add('translate-x-full', 'opacity-0');
+                    setTimeout(() => {
+                        toastElement.remove();
+                    }, 550);
+                }
+            }
+        </script>
+    @endif
+
 </body>
 </html>

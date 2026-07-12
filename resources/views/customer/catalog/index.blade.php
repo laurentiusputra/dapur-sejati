@@ -11,19 +11,13 @@
             <p class="text-brand-deep-forest/70 mt-3 text-lg">Pilih menu favoritmu, dari yang ready stock sampai pre-order.</p>
         </div>
 
-        @if(session('success'))
-            <div class="max-w-2xl mx-auto mb-10 bg-brand-matcha-100 border border-brand-matcha-300 text-brand-matcha-900 px-6 py-4 rounded-2xl text-center font-medium shadow-sm">
-                {{ session('success') }}
-            </div>
-        @endif
-
         <div class="flex justify-center gap-3 sm:gap-4 mb-12 flex-wrap" id="filter-container">
             <button data-filter="all" class="filter-btn px-6 py-2 bg-brand-deep-forest text-white rounded-full text-sm font-bold shadow-sm transition-colors cursor-pointer">Semua Menu</button>
             <button data-filter="daily" class="filter-btn px-6 py-2 bg-white text-brand-deep-forest border border-slate-200 rounded-full text-sm font-bold hover:bg-slate-50 transition-colors cursor-pointer">Daily Special</button>
             <button data-filter="po" class="filter-btn px-6 py-2 bg-white text-brand-deep-forest border border-slate-200 rounded-full text-sm font-bold hover:bg-slate-50 transition-colors cursor-pointer">Pre-Order</button>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="menu-grid">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="menu-grid">
             @forelse($products as $product)
                 @php
                     $imageSrc = null;

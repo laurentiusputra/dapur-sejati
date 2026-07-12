@@ -26,19 +26,22 @@
 
             <!-- Konten -->
             <div class="bg-white rounded-3xl p-8 sm:p-12 shadow-sm border border-slate-100 prose prose-slate max-w-none prose-headings:text-brand-deep-forest prose-a:text-brand-pantone-gold-cream">
-                <h3 class="font-bold text-lg mb-3">1. Sistem Pre-Order (PO) & Pemesanan</h3>
+                <h3 class="font-bold text-lg mb-3">1. Regulasi Operasional Tiga Klasifikasi Menu Pemesanan</h3>
                 <p class="text-sm text-slate-600 mb-6 leading-relaxed">
-                    Pemesanan produk kami pada kategori "Pre-Order Special Menu" mengikuti sistem *batch* (gelombang) mingguan. Kuota bersifat terbatas dan pemesanan hanya dianggap valid setelah proses pembayaran dan konfirmasi melalui admin kami selesai. Dapur Sejati berhak menutup *batch* PO lebih awal jika kuota penuh.
+                    Sistem pemesanan makanan katering Dapur Sejati dibagi menjadi tiga kategori utama dengan ketentuan mengikat sebagai berikut:
+                    <br>• <strong>Daily Special Menu:</strong> Merupakan hidangan harian siap saji yang diproduksi setiap hari. Dapat dipesan secara instan tanpa perlu mengikuti sistem antrean gelombang.
+                    <br>• <strong>Weekend Pre-Order (PO):</strong> Merupakan hidangan batch mingguan eksklusif. Alokasi kuota bersifat terbatas dan sistem backend berhak mengubah status produk menjadi terkunci ("CLOSED") sewaktu-waktu secara otomatis jika kapasitas dapur internal telah terpenuhi.
+                    <br>• <strong>Special Custom Order:</strong> Ditujukan untuk keperluan acara berskala besar (partai besar 1000 hingga 3000 porsi) atau permintaan menu kustom di luar jadwal rutin, di mana validitas pesanan baru dianggap sah setelah melalui kesepakatan tertulis bersama manajemen via WhatsApp Business resmi kami.
                 </p>
 
-                <h3 class="font-bold text-lg mb-3">2. Pengiriman & Pengambilan</h3>
+                <h3 class="font-bold text-lg mb-3">2. Kebijakan Keamanan Panel & Larangan Akses Ilegal (Stealth Security)</h3>
                 <p class="text-sm text-slate-600 mb-6 leading-relaxed">
-                    Produk akan disiapkan dan dikirim (atau siap diambil di alamat dapur kami) pada hari dan jam yang telah disepakati bersama. Segala bentuk keterlambatan atau kerusakan yang disebabkan oleh layanan kurir pihak ketiga berada di luar tanggung jawab langsung Dapur Sejati, namun kami akan membantu proses mediasi sebaik mungkin.
+                    Area dashboard manajemen internal toko telah dilindungi oleh gerbang keamanan berlapis khusus (Stealth Security Middleware) dan diisolasi sepenuhnya dari akses publik. Pengguna umum, tamu (guest), atau pelanggan retail biasa tidak memiliki hak atau wewenang untuk membuka area tersebut. Segala bentuk tindakan manipulasi URL, pencobaan bypass rute login, atau eksploitasi otorisasi tanpa verifikasi hak akses admin resmi (role superadmin) akan memicu pemblokiran otomatis oleh sistem keselamatan server (403 Forbidden Response) atau dialihkan secara paksa ke halaman beranda utama.
                 </p>
 
-                <h3 class="font-bold text-lg mb-3">3. Pembatalan (Refund Policy)</h3>
+                <h3 class="font-bold text-lg mb-3">3. Sistem Pembatalan, Pengiriman, & Pengembalian Dana (Refund)</h3>
                 <p class="text-sm text-slate-600 mb-6 leading-relaxed">
-                    Pembatalan pesanan untuk *Daily Menu* atau *PO* tidak dapat dilakukan jika proses produksi bahan baku (H-1) telah dimulai. Untuk "Special Custom Order" partai besar, kebijakan uang muka (*down payment*) dan pengembalian dana akan didiskusikan secara terpisah saat kesepakatan order dilakukan.
+                    Semua pesanan yang telah dikonfirmasi dan masuk ke dalam antrean produksi aktif (Daily Menu maupun Batch PO yang sedang berjalan) bersifat final dan tidak dapat dibatalkan atau dikembalikan dananya (Non-Refundable). Untuk kategori Special Custom Order partai besar, aturan uang muka (down payment) diatur terpisah saat nota transaksi diterbitkan. Tanggung jawab fisik atas kualitas hidangan berpindah sepenuhnya kepada pembeli terhitung sejak makanan diserahterimakan kepada pihak kurir logistik pengirim pihak ketiga.
                 </p>
             </div>
         </div>

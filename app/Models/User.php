@@ -49,7 +49,10 @@ class User extends Authenticatable implements FilamentUser
         }
 
         // Jalur validasi email admin & role superadmin milikmu tetap terjaga utuh 100%
-        return $this->email === 'admin@gmail.com' || $this->email === 'laurentiusputra85@gmail.com' || $this->email === 'laurentiusputra29@gmail.com' || $this->email === 'k.yuliani84@gmail.com'
+        return $this->email === 'admin@gmail.com' || $this->email === 'laurentiusputra85@gmail.com' 
+            || $this->email === 'laurentiusputra29@gmail.com' 
+            || $this->email === 'k.yuliani84@gmail.com'
+            || $this->email === 'floriantayobel@gmail.com'
             || str_ends_with($this->email, '@dapursejati.com') 
             || ($this->role ?? null) === 'superadmin';
     }
