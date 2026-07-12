@@ -18,23 +18,107 @@
             
             <div class="flex items-center gap-6 text-xs sm:text-sm font-bold tracking-wide">
                 <a href="{{ route('home') }}" id="nav-home" class="nav-link !text-brand-pantone-gold-flake hover:!text-slate-300 pb-0.5 transition-all duration-200">Home</a>
+                
+                <!-- 🛠️ UPDATE: Menambahkan anchor #menu agar otomatis meluncur ke bawah melewati banner hero -->
                 <a href="{{ route('menu') }}" id="nav-menu" class="nav-link !text-brand-pantone-gold-flake hover:!text-slate-300 pb-0.5 transition-all duration-200">Menu</a>
+                
                 <a href="{{ route('review') }}" id="nav-review" class="nav-link !text-brand-pantone-gold-flake hover:!text-slate-300 pb-0.5 transition-all duration-200">Review</a>
                 <a href="{{ route('contact') }}" id="nav-contact" class="nav-link !text-brand-pantone-gold-flake hover:!text-slate-300 pb-0.5 transition-all duration-200">Contact</a>
                 
                 <div id="nav-divider" class="h-4 w-[1px] bg-white/20 allocation-border transition-colors duration-300"></div>
 
-                <a href="#" id="nav-cart" class="nav-link !text-brand-pantone-gold-flake hover:!text-slate-300 transition-all duration-200 relative" aria-label="Keranjang Belanja">
+                <a href="{{ route('cart.index') }}" id="nav-cart" class="nav-link !text-brand-pantone-gold-flake hover:!text-slate-300 transition-all duration-200 relative" aria-label="Keranjang Belanja">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 sm:w-6 sm:h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                     </svg>
+                    
+                    @if(session('cart'))
+                        <span class="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[9px] font-bold w-4 h-4 flex items-center justify-center rounded-full">
+                            {{ count(session('cart')) }}
+                        </span>
+                    @endif
                 </a>
 
-                <a href="{{ route('login') }}" id="nav-login-btn" class="nav-link !text-brand-pantone-gold-flake hover:!text-slate-300 transition-all duration-200" aria-label="Login Management">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 sm:w-6 sm:h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                    </svg>
-                </a>
+                <!-- =========================================================================
+                     👤 SISTEM DETEKSI AUTENTIKASI AKUN DINAMIS (GUEST VS DROPDOWN PROFILE)
+                     ========================================================================= -->
+                @auth
+                    <!-- Wrapper drop menu posisi relative -->
+                    <div class="relative inline-block text-left select-none" id="profile-dropdown-wrapper">
+                        <button id="profile-menu-button" class="nav-link flex items-center focus:outline-none transition-all duration-200" aria-label="Buka Menu Akun">
+                            @if(auth()->user()->avatar)
+                                <img src="{{ str_starts_with(auth()->user()->avatar, 'http') ? auth()->user()->avatar : Storage::disk('s3')->url(auth()->user()->avatar) }}" 
+                                     alt="PP" 
+                                     class="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover border border-[#dfc365] shadow-sm hover:scale-105 transition-transform duration-200 cursor-pointer">
+                            @else
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 sm:w-6 sm:h-6 text-brand-pantone-gold-flake cursor-pointer">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                </svg>
+                            @endif
+                        </button>
+
+                        <!-- CARD POP-UP DROPDOWN PROFILE -->
+                        <div id="profile-dropdown-menu" class="hidden absolute right-0 mt-3 w-64 bg-white rounded-[24px] shadow-2xl border border-slate-100 overflow-hidden z-50 transform transition-all duration-300 origin-top-right">
+                            
+                            <!-- Header Info User -->
+                            <div class="p-4 flex items-center gap-3 border-b border-slate-100 bg-amber-50/20">
+                                @if(auth()->user()->avatar)
+                                    <img src="{{ str_starts_with(auth()->user()->avatar, 'http') ? auth()->user()->avatar : Storage::disk('s3')->url(auth()->user()->avatar) }}" 
+                                         alt="Profile" 
+                                         class="w-10 h-10 rounded-full object-cover border border-[#dfc365]">
+                                @else
+                                    <div class="w-10 h-10 rounded-full bg-[#dfc365]/20 flex items-center justify-center text-md">🍳</div>
+                                @endif
+                                <div class="overflow-hidden">
+                                    <h4 class="text-xs font-black text-slate-800 truncate leading-tight">{{ auth()->user()->name }}</h4>
+                                    <p class="text-[10px] text-slate-400 font-medium truncate mt-0.5">{{ auth()->user()->email }}</p>
+                                </div>
+                            </div>
+
+                            <!-- Baris List Tautan Menu -->
+                            <div class="py-1 text-[11px] font-bold text-slate-600">
+                                <a href="{{ route('customer.account') }}" class="flex items-center justify-between px-4 py-3 hover:bg-slate-50 transition-colors">
+                                    <div class="flex items-center gap-2.5">
+                                        <span class="text-sm opacity-80">💼</span>
+                                        <span>Daftar Pembelian</span>
+                                    </div>
+                                    <span class="text-slate-300 text-[9px]">❯</span>
+                                </a>
+                                <a href="{{ route('home') }}#menu" class="flex items-center justify-between px-4 py-3 hover:bg-slate-50 transition-colors">
+                                    <div class="flex items-center gap-2.5">
+                                        <span class="text-sm opacity-80">❤️</span>
+                                        <span>Favourite Menu</span>
+                                    </div>
+                                    <span class="text-slate-300 text-[9px]">❯</span>
+                                </a>
+                                <a href="{{ route('customer.account') }}" class="flex items-center justify-between px-4 py-3 hover:bg-slate-50 transition-colors">
+                                    <div class="flex items-center gap-2.5">
+                                        <span class="text-sm opacity-80">⚙️</span>
+                                        <span>Pengaturan Akun</span>
+                                    </div>
+                                    <span class="text-slate-300 text-[9px]">❯</span>
+                                </a>
+                            </div>
+
+                            <!-- Tombol Keluar Akun (POST Secure Logout) -->
+                            <div class="border-t border-slate-50 bg-slate-50/50">
+                                <form action="{{ route('logout') }}" method="POST" class="m-0" onsubmit="return confirm('Apakah Anda yakin ingin keluar?')">
+                                    @csrf
+                                    <button type="submit" class="w-full flex items-center gap-2.5 px-4 py-3 text-[11px] font-black text-rose-600 hover:bg-rose-50 transition-colors text-left">
+                                        <span class="text-sm">🚪</span>
+                                        <span>Keluar Akun</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <a href="{{ route('login') }}" id="nav-login-btn" class="nav-link !text-brand-pantone-gold-flake hover:!text-slate-300 transition-all duration-200" aria-label="Login Management">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 sm:w-6 sm:h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                        </svg>
+                    </a>
+                @endauth
             </div>
         </nav>
     </div>
@@ -53,7 +137,6 @@
                 </div>
             </div>
             
-            <!-- Menggunakan Flexbox agar jarak antar kolom lebih presisi dan simetris secara visual -->
             <div class="md:col-span-8 flex flex-col sm:flex-row flex-wrap justify-between gap-8 text-sm">
                 
                 <div class="space-y-3 min-w-max">
@@ -63,13 +146,11 @@
                 
                 <div class="space-y-3 min-w-max">
                     <h4 class="text-xs font-bold uppercase tracking-wider text-brand-light">Social Media</h4>
-                    <!-- Tag <br> yang bocor sudah dibersihkan -->
                     <ul class="space-y-1 text-emerald-100/80">
                         <li><a href="https://www.instagram.com/tasteofsejati/" target="_blank" class="hover:text-white transition-colors">@tasteofsejati</a></li>
                     </ul>
                 </div>
                 
-                <!-- Lebar dibatasi agar teks Alamat bisa nge-wrap rapi ke bawah -->
                 <div class="space-y-3 max-w-[240px]">
                     <h4 class="text-xs font-bold uppercase tracking-wider text-brand-light">Alamat Dapur</h4>
                     <p class="text-emerald-100/80 leading-relaxed">Jl. Peleburan Tengah No. 12,<br>Semarang Selatan, Kota Semarang</p>
@@ -103,6 +184,22 @@
             let isFloatingMode = false;
             let currentTheme = 'dark'; 
 
+            const profileBtn = document.getElementById('profile-menu-button');
+            const profileDropdown = document.getElementById('profile-dropdown-menu');
+
+            if (profileBtn && profileDropdown) {
+                profileBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    profileDropdown.classList.toggle('hidden');
+                });
+
+                document.addEventListener('click', function (e) {
+                    if (!profileDropdown.classList.contains('hidden') && !profileDropdown.contains(e.target) && e.target !== profileBtn) {
+                        profileDropdown.classList.add('hidden');
+                    }
+                });
+            }
+
             function applyNavbarTheme(theme) {
                 if (!isFloatingMode) return; 
 
@@ -124,7 +221,7 @@
                     navLinks.forEach(link => {
                         link.style.setProperty('color', '', '');
                         link.classList.remove('hover:!text-emerald-700');
-                        link.classList.add('hover:!text-emerald-900');
+                        link.classList.add('hover:!text-slate-300');
                     });
                 }
             }
@@ -137,7 +234,6 @@
                 const rect = nav.getBoundingClientRect();
                 const y = rect.top + (rect.height / 2);
                 
-                // Sensor 3 Titik
                 const xPoints = [
                     window.innerWidth * 0.15, 
                     window.innerWidth * 0.50, 
@@ -148,37 +244,31 @@
                 let darkScore = 0;
 
                 xPoints.forEach(x => {
-                    // Gunakan elementsFromPoint (Jamak) untuk X-Ray seketika seluruh tumpukan elemen
                     const elementsUnderPoint = document.elementsFromPoint(x, y);
-                    let pointIsLight = true; // Default asumsi latar belakang krem
+                    let pointIsLight = true; 
 
                     for (let el of elementsUnderPoint) {
-                        // Abaikan navbar itu sendiri jika ikut terdeteksi
                         if (el.id === 'nav-wrapper' || el.id === 'main-nav') continue;
 
-                        // Jika nabrak gambar makanan/SVG, wajib pakai teks terang (Dark Theme Navbar)
                         if (el.tagName === 'IMG' || el.tagName === 'SVG') {
                             pointIsLight = false;
                             break;
                         }
 
-                        // Deteksi warna asli dengan cepat tanpa loop DOM parent
                         const bg = window.getComputedStyle(el).backgroundColor;
                         const rgba = bg.match(/\d+(\.\d+)?/g);
                         
                         if (rgba && rgba.length >= 3) {
                             const alpha = rgba.length === 4 ? parseFloat(rgba[3]) : 1;
                             
-                            // Jika elemen punya warna solid (bukan transparan)
                             if (alpha > 0.1) {
                                 const r = parseInt(rgba[0]);
                                 const g = parseInt(rgba[1]);
                                 const b = parseInt(rgba[2]);
                                 const brightness = (r * 299 + g * 587 + b * 114) / 1000;
                                 
-                                // Cek apakah warnanya cerah
                                 pointIsLight = brightness > 150;
-                                break; // Stop ngecek ke bawah lagi karena udah nemu layar solid teratas!
+                                break; 
                             }
                         }
                     }
@@ -189,7 +279,6 @@
 
                 wrapper.style.pointerEvents = 'auto'; 
 
-                // Tentukan pemenang
                 const newTheme = (lightScore > darkScore) ? 'light' : 'dark';
                 
                 if (currentTheme !== newTheme) {
@@ -201,7 +290,6 @@
             let scrollTimeout = null;
             
             window.addEventListener('scroll', function () {
-                // Logika pembentukan pil navbar tetap dieksekusi instan tanpa delay
                 if (window.scrollY > 20) {
                     if (!isFloatingMode) {
                         isFloatingMode = true;
@@ -218,7 +306,6 @@
                         logo.classList.add('h-12', 'w-12');
                     }
                     
-                    // Logika X-Ray Warna DIBATASI (Throttled) jadi 50ms agar tidak bikin lag/CPU jebol
                     if (!scrollTimeout) {
                         scrollTimeout = setTimeout(() => {
                             checkBackgroundContrast();
@@ -253,6 +340,30 @@
                         });
                     }
                 }
+            });
+
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks2 = document.querySelectorAll('.nav-link');
+
+            window.addEventListener('scroll', () => {
+                let currentSectionId = 'home';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (window.pageYOffset >= (sectionTop - 140)) {
+                        currentSectionId = section.getAttribute('id');
+                    }
+                });
+
+                navLinks2.forEach(link => {
+                    link.classList.remove('text-brand-light', 'border-b-2', 'border-brand-light');
+                    if (!isFloatingMode) link.classList.add('text-white/80');
+                    
+                    if (link.getAttribute('href') === `#${currentSectionId}`) {
+                        if (!isFloatingMode) link.classList.remove('text-white/80');
+                        link.classList.add('text-brand-light', 'border-b-2', 'border-brand-light');
+                    }
+                });
             });
         });
     </script>

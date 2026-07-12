@@ -86,6 +86,7 @@
                 <form action="{{ route('order.store') }}" method="POST" class="relative z-10 bg-white rounded-3xl p-4 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
                     @csrf
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
+                    <input type="hidden" name="id" value="{{ $product->id }}"> <!-- [BARU] Input pendukung untuk route cart.decrease -->
                     <input type="hidden" name="quantity" value="1">
 
                     <div class="w-full aspect-square bg-slate-50 rounded-2xl mb-4 overflow-hidden flex items-center justify-center relative">
@@ -109,7 +110,17 @@
                         </div>
                         <div class="flex items-center justify-between mt-auto pt-2 border-t border-slate-50">
                             <span class="text-base font-black text-slate-900">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
-                            <button type="submit" title="Tambah Pesanan" class="w-8 h-8 rounded-full bg-[#dfc365] hover:bg-brand-emerald-950 text-brand-emerald-950 hover:text-white flex items-center justify-center font-bold text-lg transition-colors duration-200 shadow-sm cursor-pointer">+</button>
+                            
+                            <!-- 🛠️ [BARU] SINKRONISASI KAPSUL MINUS-PLUS SESSlON PADA MENU UTAMA -->
+                            @if(session('cart') && isset(session('cart')[$product->id]))
+                                <div class="flex items-center border border-slate-200 rounded-full bg-slate-50 overflow-hidden h-8 shadow-sm relative z-20 font-bold text-slate-400 text-sm">
+                                    <button type="submit" formaction="{{ route('cart.decrease') }}" class="w-8 h-8 flex items-center justify-center hover:text-brand-emerald-950 hover:bg-slate-200 transition-colors cursor-pointer">-</button>
+                                    <span class="w-8 text-center text-xs font-black text-brand-emerald-950 select-none">{{ session('cart')[$product->id]['quantity'] }}</span>
+                                    <button type="submit" formaction="{{ route('cart.add') }}" class="w-8 h-8 flex items-center justify-center hover:text-brand-emerald-950 hover:bg-slate-200 transition-colors cursor-pointer">+</button>
+                                </div>
+                            @else
+                                <button type="submit" formaction="{{ route('cart.add') }}" title="Tambah Pesanan" class="w-8 h-8 rounded-full bg-[#dfc365] hover:bg-brand-emerald-950 text-brand-emerald-950 hover:text-white flex items-center justify-center font-bold text-lg transition-colors duration-200 shadow-sm cursor-pointer">+</button>
+                            @endif
                         </div>
                     </div>
                 </form>
@@ -124,6 +135,7 @@
                 <form action="{{ route('order.store') }}" method="POST" class="daily-item-hidden hidden relative z-10 bg-white rounded-3xl p-4 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group opacity-0 scale-95 transform transition-all duration-500">
                     @csrf
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
+                    <input type="hidden" name="id" value="{{ $product->id }}"> <!-- [BARU] Input pendukung untuk route cart.decrease -->
                     <input type="hidden" name="quantity" value="1">
 
                     <div class="w-full aspect-square bg-slate-50 rounded-2xl mb-4 overflow-hidden flex items-center justify-center relative">
@@ -146,7 +158,17 @@
                         </div>
                         <div class="flex items-center justify-between mt-auto pt-2 border-t border-slate-50">
                             <span class="text-base font-black text-slate-900">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
-                            <button type="submit" title="Tambah Pesanan" class="w-8 h-8 rounded-full bg-[#dfc365] hover:bg-brand-emerald-950 text-brand-emerald-950 hover:text-white flex items-center justify-center font-bold text-lg transition-colors duration-200 shadow-sm cursor-pointer">+</button>
+                            
+                            <!-- 🛠️ [BARU] SINKRONISASI KAPSUL MINUS-PLUS SESSlON PADA MENU COLLAPSE -->
+                            @if(session('cart') && isset(session('cart')[$product->id]))
+                                <div class="flex items-center border border-slate-200 rounded-full bg-slate-50 overflow-hidden h-8 shadow-sm relative z-20 font-bold text-slate-400 text-sm">
+                                    <button type="submit" formaction="{{ route('cart.decrease') }}" class="w-8 h-8 flex items-center justify-center hover:text-brand-emerald-950 hover:bg-slate-200 transition-colors cursor-pointer">-</button>
+                                    <span class="w-8 text-center text-xs font-black text-brand-emerald-950 select-none">{{ session('cart')[$product->id]['quantity'] }}</span>
+                                    <button type="submit" formaction="{{ route('cart.add') }}" class="w-8 h-8 flex items-center justify-center hover:text-brand-emerald-950 hover:bg-slate-200 transition-colors cursor-pointer">+</button>
+                                </div>
+                            @else
+                                <button type="submit" formaction="{{ route('cart.add') }}" title="Tambah Pesanan" class="w-8 h-8 rounded-full bg-[#dfc365] hover:bg-brand-emerald-950 text-brand-emerald-950 hover:text-white flex items-center justify-center font-bold text-lg transition-colors duration-200 shadow-sm cursor-pointer">+</button>
+                            @endif
                         </div>
                     </div>
                 </form>

@@ -26,19 +26,26 @@ class SuperadminPanelProvider extends PanelProvider
             ->default()
             ->id('superadmin')
             ->path('superadmin')
-            ->login()
+            
+            // 🛠️ FIX SECURE: Menghapus ->login() agar form login bawaan Filament tidak bisa diakses publik
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->brandName('Dapur Sejati')
+            ->brandLogo(asset('img/logo/logo-dapur-sejati-white.webp'))
+            ->brandLogoHeight('2.5rem')
+            
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+            
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                \App\Filament\Widgets\StatsOverview::class,
+                \App\Filament\Widgets\SalesChart::class,
+                \App\Filament\Widgets\LatestActivities::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -52,6 +59,8 @@ class SuperadminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([
+                // 🛠️ FIX SECURE: Memasang Stealth Middleware di baris paling pertama sebelum Authenticate
+                \App\Http\Middleware\HideAdminPanel::class,
                 Authenticate::class,
             ]);
     }

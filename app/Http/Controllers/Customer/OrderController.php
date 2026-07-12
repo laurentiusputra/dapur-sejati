@@ -31,6 +31,17 @@ class OrderController extends Controller
                 return redirect()->back()->with('error', 'Maaf, stok produk tidak mencukupi.');
             }
 
+            // [BARU DITAMBAHKAN] Otomatis simpan/sinkronisasi isi form alamat dari cart ke biodata user jika sudah login
+            if (auth()->check()) {
+                auth()->user()->update([
+                    'phone'          => auth()->user()->phone ?? $request->input('phone'),
+                    'city_district'  => auth()->user()->city_district ?? $request->input('city_district'),
+                    'address_line'   => auth()->user()->address_line ?? $request->input('address_line'),
+                    'address_detail' => auth()->user()->address_detail ?? $request->input('address_detail'),
+                    'address_type'   => auth()->user()->address_type ?? $request->input('address_type'),
+                ]);
+            }
+
             // Hitung total harga item belanjaan
             $totalPrice = $product->price * $request->quantity;
 

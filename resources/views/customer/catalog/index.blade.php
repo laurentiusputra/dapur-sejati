@@ -27,19 +27,14 @@
             @forelse($products as $product)
                 @php
                     $imageSrc = null;
-                    $category = 'daily'; // Kategori default
+                    $category = 'daily'; 
                     
                     if ($product->image_path) {
-                        // 1. Eksternal URL
                         if (\Illuminate\Support\Str::startsWith($product->image_path, ['http://', 'https://'])) {
                             $imageSrc = $product->image_path;
-                        } 
-                        // 2. Dari Filament (storage)
-                        elseif (Storage::disk('public')->exists($product->image_path)) {
+                        } elseif (Storage::disk('public')->exists($product->image_path)) {
                             $imageSrc = asset('storage/' . $product->image_path);
-                        } 
-                        // 3. Auto-Scan Folder Lokal (Sesuai struktur folder lokalmu)
-                        else {
+                        } else {
                             $possiblePaths = [
                                 $product->image_path,
                                 'img/products/daily/' . $product->image_path,
@@ -50,7 +45,6 @@
                             foreach ($possiblePaths as $pp) {
                                 if (file_exists(public_path($pp))) {
                                     $imageSrc = asset($pp);
-                                    // Deteksi kategori otomatis dari letak folder gambar!
                                     if (str_contains($pp, '/po/')) $category = 'po';
                                     elseif (str_contains($pp, '/daily/')) $category = 'daily';
                                     break;
@@ -59,9 +53,8 @@
                         }
                     }
                     
-                    // Kondisi Penguncian PO
                     $isPO = ($category === 'po');
-                    $isClosed = true; // Set ke true agar semua menu PO tampil abu-abu & tergembok
+                    $isClosed = true; 
                 @endphp
 
                 <div data-category="{{ $category }}" class="menu-item bg-white rounded-3xl p-4 shadow-sm border border-slate-100 flex flex-col h-full transition-all duration-300 {{ $isPO && $isClosed ? 'opacity-75 grayscale-[0.5]' : 'hover:shadow-md' }}">
@@ -110,20 +103,28 @@
                                     </svg>
                                 </div>
                             @else
-                                <form action="{{ route('order.store') }}" method="POST" class="m-0 p-0">
+                                <!-- 🛠️ UPDATE: Membungkus tombol kapsul plus-minus terintegrasi session di dalam katalog grid -->
+                                <form action="{{ route('cart.add') }}" method="POST" class="m-0 p-0 relative z-20">
                                     @csrf
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                    <input type="hidden" name="quantity" value="1">
-                                    <input type="hidden" name="customer_name" value="Pembeli Contoh">
-                                    <input type="hidden" name="shipping_address" value="Alamat Pengiriman Contoh">
-                                    
-                                    <button type="submit" class="w-8 h-8 flex items-center justify-center bg-brand-pantone-gold-cream hover:bg-brand-pantone-dark-gold text-white rounded-full transition-colors shadow-sm cursor-pointer" title="Pesan Sekarang">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path>
-                                        </svg>
-                                    </button>
+                                    <input type="hidden" name="id" value="{{ $product->id }}">
+
+                                    @if(session('cart') && isset(session('cart')[$product->id]))
+                                        <div class="flex items-center border border-slate-200 rounded-full bg-slate-50 overflow-hidden h-8 shadow-sm relative z-20 font-bold text-slate-400 text-sm">
+                                            <button type="submit" formaction="{{ route('cart.decrease') }}" class="w-8 h-8 flex items-center justify-center hover:text-brand-emerald-950 hover:bg-slate-200 transition-colors cursor-pointer">-</button>
+                                            <span class="w-8 text-center text-xs font-black text-brand-emerald-950 select-none">{{ session('cart')[$product->id]['quantity'] }}</span>
+                                            <button type="submit" formaction="{{ route('cart.add') }}" class="w-8 h-8 flex items-center justify-center hover:text-brand-emerald-950 hover:bg-slate-200 transition-colors cursor-pointer">+</button>
+                                        </div>
+                                    @else
+                                        <button type="submit" class="w-8 h-8 flex items-center justify-center bg-brand-pantone-gold-cream hover:bg-brand-pantone-dark-gold text-white rounded-full transition-colors shadow-sm cursor-pointer" title="Tambah ke Keranjang">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path>
+                                            </svg>
+                                        </button>
+                                    @endif
                                 </form>
                             @endif
+                            
                         </div>
                     </div>
 
@@ -151,23 +152,19 @@
 
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                // 1. Reset warna semua tombol jadi putih (inactive)
                 filterBtns.forEach(b => {
                     b.classList.remove('bg-brand-deep-forest', 'text-white');
                     b.classList.add('bg-white', 'text-brand-deep-forest');
                 });
                 
-                // 2. Warnai hijau tombol yang baru saja diklik (active)
                 btn.classList.remove('bg-white', 'text-brand-deep-forest');
                 btn.classList.add('bg-brand-deep-forest', 'text-white');
 
-                // 3. Ambil target filter
                 const filter = btn.dataset.filter;
 
-                // 4. Sembunyikan atau Tampilkan kartu berdasarkan kategorinya
                 items.forEach(item => {
                     if (filter === 'all' || item.dataset.category === filter) {
-                        item.style.display = 'flex'; // Card pakai flex-col bawaan Tailwind
+                        item.style.display = 'flex'; 
                     } else {
                         item.style.display = 'none';
                     }

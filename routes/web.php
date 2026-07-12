@@ -5,6 +5,10 @@ use App\Http\Controllers\Customer\CatalogController;
 use App\Http\Controllers\Customer\OrderController;
 use App\Http\Controllers\Customer\ReviewController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController; // [DITAMBAHKAN] Import Register Controller
+use App\Http\Controllers\Customer\CartController; 
+use App\Http\Controllers\Auth\GoogleAuthController; // [DITAMBAHKAN]
+use App\Http\Controllers\Customer\ProfileController; // [BARU DITAMBAHKAN] Import Profile Controller
 
 /*
 |--------------------------------------------------------------------------
@@ -13,34 +17,54 @@ use App\Http\Controllers\Auth\LoginController;
 */
 
 // --- HALAMAN UTAMA & KATALOG ---
-// Menampilkan halaman Beranda Utama (customer/home.blade.php) lewat Controller
 Route::get('/', [CatalogController::class, 'index'])->name('home');
 
-// Menampilkan halaman Katalog Menu Lengkap
-// (Tetap menggunakan rute /menu agar link di navbar tidak perlu diubah)
 Route::get('/menu', function () {
-    // Mengambil semua data produk langsung menggunakan Model Product
     $products = \App\Models\Product::all(); 
-    
-    // Mengarahkan ke file view yang baru kita buat beserta datanya
     return view('customer.catalog.index', compact('products')); 
 })->name('menu');
 
 
+// --- FITUR KERANJANG BELANJA (CART) [BARU] ---
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/decrease', [CartController::class, 'decrease'])->name('cart.decrease'); 
+Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear'); 
+
+
+// --- AUTH GOOGLE ---
+Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->name('google.login');
+Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback']);
+
+
 // --- PROSES PESANAN / CHECKOUT (SINKRON DENGAN FILAMENT) ---
-// Memproses form pemesanan belanjaan customer dari halaman depan
 Route::post('/order', [OrderController::class, 'store'])
     ->middleware('throttle:3,1')
     ->name('order.store');
 
-// Sinkronisasi alias untuk rute checkout agar tombol form lama tidak rusak
 Route::post('/checkout', [OrderController::class, 'store'])->name('checkout');
 
 
-// --- AUTENTIKASI AKSES INTERNAL (Owner, Admin, Merchant) ---
+// --- AUTENTIKASI AKSES INTERNAL ---
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+// [BARU] ROUTE REGISTRASI AKUN BARU CUSTOMER
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
+
+
+// --- [BARU] HALAMAN AKUN & PROFIL CUSTOMER ---
+Route::get('/account', function () {
+    return view('customer.account'); 
+})->middleware('auth')->name('customer.account');
+
+// [BARU DITAMBAHKAN] Rute Proses Update Data Foto Profil, Alamat, dan Biodata Customer
+Route::post('/account/update', [ProfileController::class, 'update'])
+    ->middleware('auth')
+    ->name('customer.account.update');
 
 
 // --- HALAMAN REVIEW & TESTIMONI ---
@@ -48,7 +72,7 @@ Route::get('/review', [ReviewController::class, 'index'])->name('review');
 Route::post('/review', [ReviewController::class, 'store'])->name('review.store');
 
 
-// --- HALAMAN LEGAL & ABOUT (Disesuaikan ke Sub-Folder customer.) ---
+// --- HALAMAN LEGAL & ABOUT ---
 Route::get('/privacy-policy', function () {
     return view('customer.privacy'); 
 })->name('privacy');
@@ -62,7 +86,6 @@ Route::get('/about', function () {
 })->name('about');
 
 
-// --- ROUTE ALIRAN NAVBAR PENDUKUNG (PENGALIHAN) ---
-Route::get('/cart', function () { return redirect()->route('home'); })->name('cart');
+// --- ROUTE ALIRAN NAVBAR PENDUKUNG ---
 Route::get('/contact', function () { return redirect()->route('home'); })->name('contact');
 Route::get('/daily-menu', function () { return redirect()->route('home'); })->name('daily.menu');
