@@ -1,8 +1,19 @@
-FROM php:8.3-cli
+FROM php:8.4-cli
 
 RUN apt-get update && apt-get install -y \
-    git unzip zip libpq-dev nodejs npm \
-    && docker-php-ext-install pdo pdo_pgsql
+    git \
+    unzip \
+    zip \
+    curl \
+    nodejs \
+    npm \
+    libpq-dev \
+    libzip-dev \
+    libicu-dev \
+    && docker-php-ext-install \
+    pdo_pgsql \
+    zip \
+    intl
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
